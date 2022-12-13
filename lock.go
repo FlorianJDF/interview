@@ -3,23 +3,23 @@ package main
 import "fmt"
 
 type User struct {
-	Id   int
-	Name string
+	ID int
 }
 
-func (s *User) ChangeName(name string) {
-	s.Name = name
+func (s *User) ChangeID(id int) {
+	s.ID = id
 }
 
 func main() {
-	var names = []string{"a", "b", "c"}
+	var ids []int
 
-	u := User{1, "foo"}
-	for _, name := range names {
-		go u.ChangeName(name)
+	for i := 1; i < 100; i++ {
+		ids = append(ids, i)
 	}
 
-	for _, name := range names {
-		fmt.Println(name)
+	u := User{0}
+	for _, id := range ids {
+		go u.ChangeID(id)
+		fmt.Println(u.ID)
 	}
 }
