@@ -20,7 +20,7 @@ type FoodHandler struct {
 	pineappleHandler *PineappleHandler
 }
 
-func (handler *FoodHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request)  {
+func (handler *FoodHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	basePath, nextPath := getPaths(request.URL.Path)
 
 	if basePath == "" {
@@ -47,15 +47,15 @@ func (handler *FoodHandler) ServeHTTP(writer http.ResponseWriter, request *http.
 	}
 }
 
-type PineappleHandler struct {}
+type PineappleHandler struct{}
 
 func (handler *PineappleHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	_, nextPath = getPaths(request.URL.Path)
+	_, nextPath := getPaths(request.URL.Path)
 	writer.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(writer).Encode(map[string]interface{}{"message": "welcome to pineapple page"})
 }
 
-type MangoHandler struct {}
+type MangoHandler struct{}
 
 func (handler *MangoHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	_, _ = getPaths(request.URL.Path)
@@ -65,10 +65,10 @@ func (handler *MangoHandler) ServeHTTP(writer http.ResponseWriter, request *http
 
 func main() {
 	foodHandler := FoodHandler{}
-	server = http.Server{
-		Handler: foodHandler,
-		Addr: ":8080",
-		ReadTimeout: 5 * time.Second,
+	server := http.Server{
+		Handler:      foodHandler,
+		Addr:         ":8080",
+		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 	log.Fatal(server.ListenAndServe())
